@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from "react";
+import React, { createContext, useContext, useState } from "react"; // Adicionado `useContext`
 import videosIniciais from "../videos-reels.json";
 import { useFavoritosContext } from "./FavoritosContext";
 
@@ -6,23 +6,24 @@ export const VideoContext = createContext();
 
 export const VideoProvider = ({ children }) => {
   const [videosReels, setVideosReels] = useState(videosIniciais);
-  const { adicionarFavorito } = useFavoritosContext();
+  const { adicionarFavorito, removerFavorito } = useFavoritosContext();
 
   const toggleFavorite = (id) => {
     setVideosReels((prevVideos) =>
-      prevVideos.map((video) =>
-        video.id === id ? { ...video, favorita: !video.favorita } : video
-      )
+      prevVideos.map((video) => {
+        if (video.id === id) {
+          const atualizado = { ...video, favorita: !video.favorita };
+          if (atualizado.favorita) {
+            adicionarFavorito(atualizado);
+          } else {
+            removerFavorito(atualizado.id);
+          }
+          return atualizado;
+        }
+        return video;
+      })
     );
   };
-
-  useEffect(() => {
-    videosReels.forEach((video) => {
-      if (video.favorita) {
-        adicionarFavorito(video);
-      }
-    });
-  }, [videosReels, adicionarFavorito]);
 
   return (
     <VideoContext.Provider value={{ videosReels, toggleFavorite }}>
@@ -30,3 +31,5 @@ export const VideoProvider = ({ children }) => {
     </VideoContext.Provider>
   );
 };
+
+export const useVideoContext = () => useContext(VideoContext);

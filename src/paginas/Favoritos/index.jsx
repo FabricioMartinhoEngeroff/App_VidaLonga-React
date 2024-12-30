@@ -1,54 +1,105 @@
 import React from "react";
-import styled from "styled-components";
 import { useFavoritosContext } from "../../Context/FavoritosContext";
 import { useModalContext } from "../../Context/ModalContext";
+import { useVideoContext } from "../../Context/VideoContext"; 
+import styled from "styled-components";
 
-const GaleriaContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
+// Styled Components
+const Galeria = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
   padding: 20px;
 `;
 
-const VideoCard = styled.div`
-  flex: 0 1 calc(25% - 16px);
+const VideoList = styled.div`
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 10px;
-  background-color: #f9f9f9;
+  gap: 16px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  padding: 16px;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+`;
+
+const VideoItem = styled.div`
+  flex-shrink: 0;
+  width: 200px;
+  text-align: center;
 
   video {
     width: 100%;
     height: auto;
     border-radius: 8px;
     cursor: pointer;
+    object-fit: cover;
   }
 `;
 
+const BotaoRemover = styled.button`
+  margin-top: 10px;
+  padding: 5px 10px;
+  border: none;
+  background-color: #f44336;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #d32f2f;
+  }
+`;
+
+const MensagemVazia = styled.p`
+  text-align: center;
+  font-size: 18px;
+  color: #555;
+`;
+
+// Component
 const Favoritos = () => {
-  const { favoritos } = useFavoritosContext();
+  const { favoritos, removerFavorito } = useFavoritosContext();
   const { abrirModal } = useModalContext();
+  const { toggleFavorite } = useVideoContext();
+
+  const handleVideoHover = (event, action) => {
+    if (action === "play") event.target.play();
+    if (action === "pause") event.target.pause();
+  };
+
+  const handleRemoverFavorito = (id) => {
+    removerFavorito(id);
+    toggleFavorite(id); // Atualiza o estado do vídeo para desfavoritar em todos os contextos
+  };
 
   if (favoritos.length === 0) {
-    return <p>Você ainda não possui vídeos favoritos.</p>;
+    return (
+      <MensagemVazia>Nenhum vídeo foi adicionado aos favoritos.</MensagemVazia>
+    );
   }
 
   return (
-    <GaleriaContainer>
-      {favoritos.map((video) => (
-        <VideoCard key={video.id}>
-          <video
-            src={video.path}
-            onClick={() => abrirModal(video)}
-            controls
-          />
-          <h4>{video.title}</h4>
-        </VideoCard>
-      ))}
-    </GaleriaContainer>
+    <Galeria>
+      <VideoList>
+        {favoritos.map((video) => (
+          <VideoItem key={video.id}>
+            <video
+              src={video.path}
+              muted
+              playsInline
+              onClick={() => abrirModal(video)}
+              onMouseEnter={(e) => handleVideoHover(e, "play")}
+              onMouseLeave={(e) => handleVideoHover(e, "pause")}
+            />
+            <BotaoRemover onClick={() => handleRemoverFavorito(video.id)}>
+              Remover
+            </BotaoRemover>
+          </VideoItem>
+        ))}
+      </VideoList>
+    </Galeria>
   );
 };
 
