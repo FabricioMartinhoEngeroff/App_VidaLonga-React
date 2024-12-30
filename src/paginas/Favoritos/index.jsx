@@ -1,7 +1,7 @@
 import React from "react";
 import { useFavoritosContext } from "../../Context/FavoritosContext";
 import { useModalContext } from "../../Context/ModalContext";
-import { useVideoContext } from "../../Context/VideoContext"; 
+import { useVideoContext } from "../../Context/VideoContext";
 import styled from "styled-components";
 
 // Styled Components
@@ -36,19 +36,28 @@ const VideoItem = styled.div`
     cursor: pointer;
     object-fit: cover;
   }
+
+  h3 {
+    margin-top: 10px;
+    font-size: 16px;
+    color: #000;
+    text-align: center;
+  }
 `;
 
 const BotaoRemover = styled.button`
   margin-top: 10px;
   padding: 5px 10px;
   border: none;
-  background-color: #f44336;
-  color: white;
+  background-color: rgba(244, 67, 54, 0.2);
+  color: rgba(255, 255, 255, 0.7);
   border-radius: 5px;
   cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
 
   &:hover {
     background-color: #d32f2f;
+    color: white;
   }
 `;
 
@@ -58,7 +67,6 @@ const MensagemVazia = styled.p`
   color: #555;
 `;
 
-// Component
 const Favoritos = () => {
   const { favoritos, removerFavorito } = useFavoritosContext();
   const { abrirModal } = useModalContext();
@@ -71,7 +79,7 @@ const Favoritos = () => {
 
   const handleRemoverFavorito = (id) => {
     removerFavorito(id);
-    toggleFavorite(id); // Atualiza o estado do vídeo para desfavoritar em todos os contextos
+    toggleFavorite(id);
   };
 
   if (favoritos.length === 0) {
@@ -93,6 +101,7 @@ const Favoritos = () => {
               onMouseEnter={(e) => handleVideoHover(e, "play")}
               onMouseLeave={(e) => handleVideoHover(e, "pause")}
             />
+            <h3>{video.title}</h3>
             <BotaoRemover onClick={() => handleRemoverFavorito(video.id)}>
               Remover
             </BotaoRemover>

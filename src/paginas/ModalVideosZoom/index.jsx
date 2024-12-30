@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { MdClose, MdFavorite, MdFavoriteBorder } from "react-icons/md";
 import { useModalContext } from "../../Context/ModalContext";
-import { useFavoritosContext } from "../../Context/FavoritosContext";
+import { useVideoContext } from "../../Context/VideoContext";
 
 const ModalBackground = styled.div`
   position: fixed;
@@ -84,9 +84,11 @@ const FavoriteButton = styled.button`
 
 const ModalVideoZoom = () => {
   const { videoSelecionado, fecharModal } = useModalContext();
-  const { adicionarFavorito } = useFavoritosContext();
+  const { videosReels, toggleFavorite } = useVideoContext(); 
 
   if (!videoSelecionado) return null;
+
+  const videoAtualizado = videosReels.find((video) => video.id === videoSelecionado.id);
 
   return (
     <ModalBackground onClick={fecharModal}>
@@ -96,17 +98,17 @@ const ModalVideoZoom = () => {
         </CloseButton>
         <VideoContainer>
           <video controls>
-            <source src={videoSelecionado.path} type="video/mp4" />
+            <source src={videoAtualizado.path} type="video/mp4" />
           </video>
         </VideoContainer>
         <DescriptionContainer>
-          <h3>{videoSelecionado.title}</h3>
-          <p>{videoSelecionado.description}</p>
+          <h3>{videoAtualizado.title}</h3>
+          <p>{videoAtualizado.description}</p>
           <FavoriteButton
-            $favorito={videoSelecionado.favorita}
-            onClick={() => adicionarFavorito(videoSelecionado)}
+            $favorito={videoAtualizado.favorita}
+            onClick={() => toggleFavorite(videoAtualizado.id)}
           >
-            {videoSelecionado.favorita ? <MdFavorite /> : <MdFavoriteBorder />}
+            {videoAtualizado.favorita ? <MdFavorite /> : <MdFavoriteBorder />}
           </FavoriteButton>
         </DescriptionContainer>
       </ModalContent>

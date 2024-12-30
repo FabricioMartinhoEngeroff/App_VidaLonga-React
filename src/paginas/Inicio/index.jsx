@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from "react";
+import React, { useContext, useRef } from "react"; 
 import styled from "styled-components";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { MdFavorite, MdFavoriteBorder } from "react-icons/md";
@@ -29,6 +29,17 @@ const VideoItem = styled.div`
     border-radius: 8px;
     cursor: pointer;
     object-fit: cover;
+  }
+
+  h3 {
+    margin-top: 10px;
+    font-size: 16px;
+    color: #000;
+    text-align: center;
+  }
+
+  .favorite-container {
+    margin-top: 10px;
   }
 `;
 
@@ -61,12 +72,15 @@ const Inicio = () => {
               onMouseEnter={(e) => e.target.play()}
               onMouseLeave={(e) => e.target.pause()}
             />
-            <FavoriteButton
-              $favorito={video.favorita}
-              onClick={() => toggleFavorite(video.id)}
-            >
-              {video.favorita ? <MdFavorite /> : <MdFavoriteBorder />}
-            </FavoriteButton>
+            <h3>{video.title}</h3>
+            <div className="favorite-container">
+              <FavoriteButton
+                $favorito={video.favorita}
+                onClick={() => toggleFavorite(video.id)}
+              >
+                {video.favorita ? <MdFavorite /> : <MdFavoriteBorder />}
+              </FavoriteButton>
+            </div>
           </VideoItem>
         ))}
       </VideoList>
