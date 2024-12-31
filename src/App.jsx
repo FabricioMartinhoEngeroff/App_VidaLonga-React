@@ -38,36 +38,31 @@ const MainContainer = styled.main`
   overflow-x: hidden;
 `;
 
-const App = () => (
-  <BrowserRouter>
-    <FavoritosProvider>
-      <VideoProvider>
-        <ModalProvider>
-          <FundoGradiente>
-            <EstilosGlobais />
-            <AppContainer>
-              {/* Cabeçalho no topo */}
-              <Cabecalho />
+const App = () => {
+  console.log("Renderizando App");
 
-              {/* Barra de Navegação Horizontal */}
-              <BarraNavegacao />
-
-              {/* Conteúdo Principal */}
-              <MainContainer>
-                <AppRoutes />
-              </MainContainer>
-
-              {/* Rodapé */}
-              <Footer />
-
-              {/* Modal de Zoom para Vídeos */}
-              <ModalVideoZoom />
-            </AppContainer>
-          </FundoGradiente>
-        </ModalProvider>
-      </VideoProvider>
-    </FavoritosProvider>
-  </BrowserRouter>
-);
+  return (
+    <BrowserRouter>
+      <FavoritosProvider>
+        <VideoProvider>
+          <ModalProvider>
+            <FundoGradiente>
+              <EstilosGlobais />
+              <AppContainer>
+                <Cabecalho />
+                <BarraNavegacao />
+                <MainContainer>
+                  <AppRoutes />
+                </MainContainer>
+                <Footer />
+                <ModalVideoZoom />
+              </AppContainer>
+            </FundoGradiente>
+          </ModalProvider>
+        </VideoProvider>
+      </FavoritosProvider>
+    </BrowserRouter>
+  );
+};
 
 export default App;

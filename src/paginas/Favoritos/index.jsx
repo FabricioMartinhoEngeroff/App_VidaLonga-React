@@ -3,16 +3,16 @@ import { useFavoritosContext } from "../../Context/FavoritosContext";
 import { useModalContext } from "../../Context/ModalContext";
 import { useVideoContext } from "../../Context/VideoContext";
 import styled from "styled-components";
-import { FiArrowRight } from "react-icons/fi"; // Importa a seta
+import { FiArrowRight } from "react-icons/fi";
 import Carrossel from "../../componentes/Carrossel";
 import Titulo from "../../componentes/Titulo";
 
 const TituloContainer = styled.div`
   display: flex;
   align-items: center;
-  gap: 8px; /* Define o espaçamento mínimo entre o título e "Ver tudo" */
+  gap: 8px;
   padding: 0 20px;
-  margin-bottom: 5px; /* Espaço entre o título e o carrossel */
+  margin-bottom: 5px;
 `;
 
 const VerTudo = styled.button`
@@ -30,7 +30,7 @@ const VerTudo = styled.button`
   }
 
   svg {
-    margin-left: 3px; /* Pequeno espaçamento entre o texto e a seta */
+    margin-left: 3px;
   }
 `;
 
@@ -83,7 +83,6 @@ const Favoritos = () => {
 
   const handleVerTudoClick = () => {
     console.log("Redirecionando para a página de favoritos...");
-    // Aqui você pode adicionar lógica para redirecionar
   };
 
   if (favoritos.length === 0) {
@@ -112,7 +111,7 @@ const Favoritos = () => {
               onMouseLeave={(e) => e.target.pause()}
             />
             <h3>{video.title}</h3>
-            <BotaoRemover onClick={() => removerFavorito(video.id)}>
+            <BotaoRemover onClick={() => toggleFavorite(video.id)}>
               Remover
             </BotaoRemover>
           </VideoItem>

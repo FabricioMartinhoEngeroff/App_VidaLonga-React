@@ -5,7 +5,7 @@ import { MdChevronLeft, MdChevronRight } from "react-icons/md";
 const CarrosselContainer = styled.div`
   position: relative;
   padding: 16px;
-  overflow: hidden; /* Garante que só 5 itens sejam visíveis */
+  overflow: hidden; 
 `;
 
 const ScrollButton = styled.button`
@@ -28,9 +28,9 @@ const VideoList = styled.div`
   display: flex;
   flex-wrap: nowrap;
   gap: 16px;
-  overflow: hidden; /* Oculta os vídeos fora da área visível */
+  overflow: hidden; 
   scroll-behavior: smooth;
-  width: calc(250px * 5 + 16px * 4); /* Largura para 5 itens visíveis */
+  width: calc(250px * 5 + 16px * 4);
 `;
 
 const VideoItem = styled.div`
@@ -57,7 +57,7 @@ const Carrossel = ({ children }) => {
 
   const scroll = (direction) => {
     if (carrosselRef.current) {
-      const itemWidth = 200 + 16; // Largura do item + gap
+      const itemWidth = 200 + 16; 
       const scrollAmount = direction === "left" ? -itemWidth : itemWidth;
 
       carrosselRef.current.scrollBy({

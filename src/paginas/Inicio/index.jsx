@@ -1,18 +1,18 @@
 import React, { useContext } from "react";
 import styled from "styled-components";
-import { MdFavorite, MdFavoriteBorder } from "react-icons/md";
-import { FiArrowRight } from "react-icons/fi"; // Importa a seta
+import { FiArrowRight } from "react-icons/fi";
 import { VideoContext } from "../../Context/VideoContext";
 import { useModalContext } from "../../Context/ModalContext";
 import Carrossel from "../../componentes/Carrossel";
 import Titulo from "../../componentes/Titulo";
+import BotaoFavoritar from "../../componentes/BotaoFavoritar";
 
 const TituloContainer = styled.div`
   display: flex;
   align-items: center;
-  gap: 8px; /* Define o espaçamento mínimo entre o título e "Ver tudo" */
+  gap: 8px;
   padding: 0 20px;
-  margin-bottom: 5px; /* Espaço entre o título e o carrossel */
+  margin-bottom: 5px;
 `;
 
 const VerTudo = styled.button`
@@ -30,7 +30,7 @@ const VerTudo = styled.button`
   }
 
   svg {
-    margin-left: 3px; /* Pequeno espaçamento entre o texto e a seta */
+    margin-left: 3px;
   }
 `;
 
@@ -55,21 +55,12 @@ const VideoItem = styled.div`
   }
 `;
 
-const FavoriteButton = styled.button`
-  background: none;
-  border: none;
-  font-size: 24px;
-  cursor: pointer;
-  color: #8b5cd6;
-`;
-
 const Inicio = () => {
   const { videosReels, toggleFavorite } = useContext(VideoContext);
   const { abrirModal } = useModalContext();
 
   const handleVerTudoClick = () => {
     console.log("Redirecionando para a página de todos os vídeos...");
-    // Aqui você pode adicionar lógica para redirecionar
   };
 
   return (
@@ -93,9 +84,10 @@ const Inicio = () => {
             />
             <h3>{video.title}</h3>
             <div className="favorite-container">
-              <FavoriteButton onClick={() => toggleFavorite(video.id)}>
-                {video.favorita ? <MdFavorite /> : <MdFavoriteBorder />}
-              </FavoriteButton>
+              <BotaoFavoritar
+                favorito={video.favorita}
+                onClick={() => toggleFavorite(video.id)}
+              />
             </div>
           </VideoItem>
         ))}

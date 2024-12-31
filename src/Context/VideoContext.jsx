@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from "react"; // Adicionado `useContext`
+import React, { createContext, useContext, useState } from "react";
 import videosIniciais from "../videos-reels.json";
 import { useFavoritosContext } from "./FavoritosContext";
 
@@ -13,11 +13,9 @@ export const VideoProvider = ({ children }) => {
       prevVideos.map((video) => {
         if (video.id === id) {
           const atualizado = { ...video, favorita: !video.favorita };
-          if (atualizado.favorita) {
-            adicionarFavorito(atualizado);
-          } else {
-            removerFavorito(atualizado.id);
-          }
+          atualizado.favorita
+            ? adicionarFavorito(atualizado)
+            : removerFavorito(atualizado.id);
           return atualizado;
         }
         return video;
