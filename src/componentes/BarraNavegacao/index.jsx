@@ -5,10 +5,10 @@ import ItemNavegacao from "./ItemNavegacao";
 
 const BarraNavegacaoContainer = styled.nav`
   display: flex;
-  justify-content: center; /* Centraliza os itens horizontalmente */
+  justify-content: center; 
   align-items: center;
-  padding: 10px 10; /* Reduz a altura da barra */
-  background-color: #629359; /* Cor de fundo consistente com o banner */
+  padding: 10px 10; 
+  background-color: #7da873;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); 
   gap: 45px; 
   width: 100%; 

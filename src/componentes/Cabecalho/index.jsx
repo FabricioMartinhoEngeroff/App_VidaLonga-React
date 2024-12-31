@@ -3,7 +3,7 @@ import CampoTexto from "../CampoTexto";
 import Titulo from "../Titulo";
 
 const HeaderEstilizado = styled.header`
-  background-color: #629359;
+  background-color: #7da873;
   padding: 10px 20px;
   display: flex;
   justify-content: space-between;
@@ -15,12 +15,18 @@ const HeaderEstilizado = styled.header`
 const LogoETituloContainer = styled.div`
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 5px;
 `;
 
 const Logo = styled.img`
-  height: 50px;
+  height: 85px;
   width: auto;
+  margin: 10;
+  padding: 0;
+  display: block;
+  outline: none;
+  box-shadow: #629359;
+  background-color: #629359;
 `;
 
 const CampoTextoContainer = styled.div`
