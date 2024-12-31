@@ -1,33 +1,49 @@
-import React, { useContext, useRef } from "react"; 
+import React, { useContext } from "react";
 import styled from "styled-components";
-import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { MdFavorite, MdFavoriteBorder } from "react-icons/md";
+import { FiArrowRight } from "react-icons/fi"; // Importa a seta
 import { VideoContext } from "../../Context/VideoContext";
 import { useModalContext } from "../../Context/ModalContext";
-import { FavoriteButton, ArrowButton } from "../../componentes/StyledComponents";
+import Carrossel from "../../componentes/Carrossel";
+import Titulo from "../../componentes/Titulo";
 
-const VideoList = styled.div`
+const TituloContainer = styled.div`
   display: flex;
-  gap: 16px;
-  overflow-x: auto;
-  scroll-behavior: smooth;
-  padding: 16px;
+  align-items: center;
+  gap: 8px; /* Define o espaçamento mínimo entre o título e "Ver tudo" */
+  padding: 0 20px;
+  margin-bottom: 5px; /* Espaço entre o título e o carrossel */
+`;
 
-  &::-webkit-scrollbar {
-    display: none;
+const VerTudo = styled.button`
+  display: flex;
+  align-items: center;
+  background: none;
+  border: none;
+  font-size: 14px;
+  color: #6a0dad;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+    color: #8b5cd6;
+  }
+
+  svg {
+    margin-left: 3px; /* Pequeno espaçamento entre o texto e a seta */
   }
 `;
 
 const VideoItem = styled.div`
   flex-shrink: 0;
   width: 200px;
+  max-width: 200px;
   text-align: center;
 
   video {
     width: 100%;
     height: auto;
     border-radius: 8px;
-    cursor: pointer;
     object-fit: cover;
   }
 
@@ -37,31 +53,34 @@ const VideoItem = styled.div`
     color: #000;
     text-align: center;
   }
+`;
 
-  .favorite-container {
-    margin-top: 10px;
-  }
+const FavoriteButton = styled.button`
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #8b5cd6;
 `;
 
 const Inicio = () => {
   const { videosReels, toggleFavorite } = useContext(VideoContext);
   const { abrirModal } = useModalContext();
 
-  const videoListRef = useRef(null);
-
-  const scroll = (direction) => {
-    videoListRef.current.scrollBy({
-      left: direction === "left" ? -200 : 200,
-      behavior: "smooth",
-    });
+  const handleVerTudoClick = () => {
+    console.log("Redirecionando para a página de todos os vídeos...");
+    // Aqui você pode adicionar lógica para redirecionar
   };
 
   return (
     <div>
-      <ArrowButton onClick={() => scroll("left")}>
-        <FaArrowLeft />
-      </ArrowButton>
-      <VideoList ref={videoListRef}>
+      <TituloContainer>
+        <Titulo $alinhamento="left">Reels</Titulo>
+        <VerTudo onClick={handleVerTudoClick}>
+          Ver tudo <FiArrowRight />
+        </VerTudo>
+      </TituloContainer>
+      <Carrossel>
         {videosReels.map((video) => (
           <VideoItem key={video.id}>
             <video
@@ -74,19 +93,13 @@ const Inicio = () => {
             />
             <h3>{video.title}</h3>
             <div className="favorite-container">
-              <FavoriteButton
-                $favorito={video.favorita}
-                onClick={() => toggleFavorite(video.id)}
-              >
+              <FavoriteButton onClick={() => toggleFavorite(video.id)}>
                 {video.favorita ? <MdFavorite /> : <MdFavoriteBorder />}
               </FavoriteButton>
             </div>
           </VideoItem>
         ))}
-      </VideoList>
-      <ArrowButton onClick={() => scroll("right")}>
-        <FaArrowRight />
-      </ArrowButton>
+      </Carrossel>
     </div>
   );
 };

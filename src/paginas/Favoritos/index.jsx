@@ -3,37 +3,47 @@ import { useFavoritosContext } from "../../Context/FavoritosContext";
 import { useModalContext } from "../../Context/ModalContext";
 import { useVideoContext } from "../../Context/VideoContext";
 import styled from "styled-components";
+import { FiArrowRight } from "react-icons/fi"; // Importa a seta
+import Carrossel from "../../componentes/Carrossel";
+import Titulo from "../../componentes/Titulo";
 
-// Styled Components
-const Galeria = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 20px;
-  padding: 20px;
+const TituloContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Define o espaçamento mínimo entre o título e "Ver tudo" */
+  padding: 0 20px;
+  margin-bottom: 5px; /* Espaço entre o título e o carrossel */
 `;
 
-const VideoList = styled.div`
+const VerTudo = styled.button`
   display: flex;
-  gap: 16px;
-  overflow-x: auto;
-  scroll-behavior: smooth;
-  padding: 16px;
+  align-items: center;
+  background: none;
+  border: none;
+  font-size: 14px;
+  color: #6a0dad;
+  cursor: pointer;
 
-  &::-webkit-scrollbar {
-    display: none;
+  &:hover {
+    text-decoration: underline;
+    color: #8b5cd6;
+  }
+
+  svg {
+    margin-left: 3px; /* Pequeno espaçamento entre o texto e a seta */
   }
 `;
 
 const VideoItem = styled.div`
   flex-shrink: 0;
   width: 200px;
+  max-width: 200px;
   text-align: center;
 
   video {
     width: 100%;
     height: auto;
     border-radius: 8px;
-    cursor: pointer;
     object-fit: cover;
   }
 
@@ -49,14 +59,13 @@ const BotaoRemover = styled.button`
   margin-top: 10px;
   padding: 5px 10px;
   border: none;
-  background-color: rgba(244, 67, 54, 0.2);
+  background-color: rgba(187, 6, 248, 0.2);
   color: rgba(255, 255, 255, 0.7);
   border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s, color 0.3s;
 
   &:hover {
-    background-color: #d32f2f;
+    background-color: #8b5cd6;
     color: white;
   }
 `;
@@ -72,14 +81,9 @@ const Favoritos = () => {
   const { abrirModal } = useModalContext();
   const { toggleFavorite } = useVideoContext();
 
-  const handleVideoHover = (event, action) => {
-    if (action === "play") event.target.play();
-    if (action === "pause") event.target.pause();
-  };
-
-  const handleRemoverFavorito = (id) => {
-    removerFavorito(id);
-    toggleFavorite(id);
+  const handleVerTudoClick = () => {
+    console.log("Redirecionando para a página de favoritos...");
+    // Aqui você pode adicionar lógica para redirecionar
   };
 
   if (favoritos.length === 0) {
@@ -89,8 +93,14 @@ const Favoritos = () => {
   }
 
   return (
-    <Galeria>
-      <VideoList>
+    <div>
+      <TituloContainer>
+        <Titulo $alinhamento="left">Favoritos</Titulo>
+        <VerTudo onClick={handleVerTudoClick}>
+          Ver tudo <FiArrowRight />
+        </VerTudo>
+      </TituloContainer>
+      <Carrossel>
         {favoritos.map((video) => (
           <VideoItem key={video.id}>
             <video
@@ -98,17 +108,17 @@ const Favoritos = () => {
               muted
               playsInline
               onClick={() => abrirModal(video)}
-              onMouseEnter={(e) => handleVideoHover(e, "play")}
-              onMouseLeave={(e) => handleVideoHover(e, "pause")}
+              onMouseEnter={(e) => e.target.play()}
+              onMouseLeave={(e) => e.target.pause()}
             />
             <h3>{video.title}</h3>
-            <BotaoRemover onClick={() => handleRemoverFavorito(video.id)}>
+            <BotaoRemover onClick={() => removerFavorito(video.id)}>
               Remover
             </BotaoRemover>
           </VideoItem>
         ))}
-      </VideoList>
-    </Galeria>
+      </Carrossel>
+    </div>
   );
 };
 

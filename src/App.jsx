@@ -5,7 +5,7 @@ import { VideoProvider } from "./Context/VideoContext";
 import { FavoritosProvider } from "./Context/FavoritosContext";
 import ModalProvider from "./Context/ModalContext";
 import Cabecalho from "./componentes/Cabecalho";
-import BarraLateral from "./componentes/BarraLateral";
+import BarraNavegacao from "./componentes/BarraNavegacao"; // Substituindo a BarraLateral
 import Footer from "./componentes/Rodape";
 import AppRoutes from "./AppRoutes";
 import EstilosGlobais from "./componentes/EstilosGlobais";
@@ -32,25 +32,35 @@ const AppContainer = styled.div`
 
 const MainContainer = styled.main`
   display: flex;
-  gap: 24px;
+  flex-direction: column;
   flex-grow: 1;
+  gap: 24px;
   overflow-x: hidden;
 `;
 
 const App = () => (
   <BrowserRouter>
-    <FavoritosProvider> 
+    <FavoritosProvider>
       <VideoProvider>
         <ModalProvider>
           <FundoGradiente>
             <EstilosGlobais />
             <AppContainer>
+              {/* Cabeçalho no topo */}
               <Cabecalho />
+
+              {/* Barra de Navegação Horizontal */}
+              <BarraNavegacao />
+
+              {/* Conteúdo Principal */}
               <MainContainer>
-                <BarraLateral />
                 <AppRoutes />
               </MainContainer>
+
+              {/* Rodapé */}
               <Footer />
+
+              {/* Modal de Zoom para Vídeos */}
               <ModalVideoZoom />
             </AppContainer>
           </FundoGradiente>

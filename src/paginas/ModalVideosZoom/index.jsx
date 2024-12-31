@@ -64,22 +64,16 @@ const CloseButton = styled.button`
   cursor: pointer;
 
   &:hover {
-    color: red;
+    color: #8b5cd6;
   }
 `;
 
 const FavoriteButton = styled.button`
   background: none;
   border: none;
-  cursor: pointer;
   font-size: 24px;
-  color: ${({ $favorito }) => ($favorito ? "red" : "white")};
-  display: flex;
-  align-items: center;
-
-  &:hover {
-    color: ${({ $favorito }) => ($favorito ? "darkred" : "lightgray")};
-  }
+  cursor: pointer;
+  color: #8b5cd6;
 `;
 
 const ModalVideoZoom = () => {
