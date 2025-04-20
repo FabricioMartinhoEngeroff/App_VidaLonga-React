@@ -2,17 +2,27 @@ import { defineConfig } from 'vite';
 import preact from '@preact/preset-vite';
 import path from 'path';
 
+const aliasPaths = {
+  '@api': 'src/api',
+  '@application': 'src/application',
+  '@components': 'src/components',
+  '@module': 'src/module',
+  '@pages': 'src/pages',
+  '@styles': 'src/styles',
+  '@utils': 'src/utils'
+};
+
+
+const resolvedAliases = Object.fromEntries(
+  Object.entries(aliasPaths).map(([key, value]) => [key, path.resolve(__dirname, value)])
+);
+
 export default defineConfig({
   plugins: [preact()],
   resolve: {
-    alias: {
-      '@api': path.resolve(__dirname, './src/api'),
-      '@application': path.resolve(__dirname, './src/application'),
-      '@components': path.resolve(__dirname, './src/components'),
-      '@module': path.resolve(__dirname, './src/module'),
-      '@pages': path.resolve(__dirname, './src/pages'),
-      '@styles': path.resolve(__dirname, './src/styles'),
-      '@utils': path.resolve(__dirname, './src/utils')
-    }
+    alias: resolvedAliases
+  },
+  build: {
+    outDir: 'dist'
   }
 });
