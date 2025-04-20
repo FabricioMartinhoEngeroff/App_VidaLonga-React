@@ -1,5 +1,5 @@
 {
-  "name": "post-receitassaudaveis",
+  "name": "vida-longa-flix",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -14,7 +14,6 @@
     "react-icons": "^5.5.0",
     "react-player": "^2.16.0",
     "react-router-dom": "^6.30.0",
-    "react-scripts": "^5.0.1",
     "styled-components": "^6.1.17"
   },
   "devDependencies": {
@@ -22,7 +21,7 @@
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",
     "@types/react-router-dom": "^5.3.3",
-    "typescript": "^5.8.3",
+    "typescript": "^5.2.2",
     "vite": "^6.0.1"
   }
 }
