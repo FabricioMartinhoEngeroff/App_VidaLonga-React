@@ -1,0 +1,21 @@
+{
+    "compilerOptions": {
+      "target": "ESNext",                      
+      "module": "ESNext",                      
+      "jsx": "react-jsx",                       
+      "strict": true,                           
+      "esModuleInterop": true,                  
+      "skipLibCheck": true,                     
+      "forceConsistentCasingInFileNames": true,
+      "baseUrl": "src",                         
+      "paths": {
+        "@api/*": ["api/*"],                    
+        "@application/*": ["application/*"],    
+        "@components/*": ["components/*"],      
+        "@module/*": ["module/*"],             
+        "@pages/*": ["pages/*"],               
+        "@styles/*": ["styles/*"],              
+        "@utils/*": ["utils/*"]                 
+      }
+    }
+  }
