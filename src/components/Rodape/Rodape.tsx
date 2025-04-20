@@ -11,6 +11,12 @@ const Rodape = styled.footer`
   color: black;
   font-size: 14px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 6px;
+    text-align: center;
+  }
 `;
 
 // Componente funcional com tipagem automática via React.FC

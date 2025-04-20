@@ -27,5 +27,6 @@ export interface Video {
   carboidratos?: number;
   gorduras?: number;
   fibras?: number;
+  calorias?: number; 
   favorita?: boolean;
 }

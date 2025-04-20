@@ -7,23 +7,21 @@ const EstilosGlobais = createGlobalStyle`
     box-sizing: border-box;
   }
 
-  html, body {
+  html {
     height: 100%;
-    font-family: Arial, sans-serif;
-    line-height: 1.5;
+    font-size: 16px;
+    scroll-behavior: smooth;
   }
 
   body {
-    display: flex;
-    flex-direction: column;
+    height: 100%;
+    font-family: Arial, sans-serif;
+    line-height: 1.5;
     background-color: #f9f9f9;
     color: #333;
   }
 
-  h1, h2, h3, h4, h5, h6 {
-    margin: 0;
-  }
-
+  h1, h2, h3, h4, h5, h6,
   p {
     margin: 0;
   }
@@ -37,19 +35,31 @@ const EstilosGlobais = createGlobalStyle`
     cursor: pointer;
     border: none;
     background: none;
+    font: inherit;
   }
 
   ul, ol {
     list-style: none;
   }
 
-  img {
+  img, video, iframe {
     max-width: 100%;
+    height: auto;
     display: block;
   }
 
   input, textarea {
     font: inherit;
+  }
+
+  @media (max-width: 768px) {
+    html {
+      font-size: 15px;
+    }
+
+    body {
+      padding: 0 8px;
+    }
   }
 `;
 

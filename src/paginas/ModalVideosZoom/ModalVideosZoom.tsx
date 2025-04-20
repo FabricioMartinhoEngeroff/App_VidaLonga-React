@@ -27,6 +27,10 @@ const ModalContent = styled.div`
   display: flex;
   flex-direction: row;
   gap: 20px;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
 `;
 
 const VideoContainer = styled.div`
@@ -42,6 +46,8 @@ const VideoContainer = styled.div`
 const DescriptionContainer = styled.div`
   flex: 1;
   color: white;
+  display: flex;
+  flex-direction: column;
 
   h3 {
     margin-bottom: 10px;
@@ -49,9 +55,39 @@ const DescriptionContainer = styled.div`
   }
 
   p {
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     font-size: 16px;
     line-height: 1.5;
+  }
+
+  .receita {
+    margin: 12px 0;
+    background-color: #1c1c1c;
+    padding: 12px;
+    border-radius: 6px;
+    font-size: 15px;
+    line-height: 1.4;
+    color: #ddd;
+  }
+
+  .nutrientes {
+    margin-top: 12px;
+    font-size: 14px;
+    color: #ccc;
+
+    li {
+      margin-bottom: 4px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    h3 {
+      font-size: 20px;
+    }
+
+    p, .receita, .nutrientes {
+      font-size: 15px;
+    }
   }
 `;
 
@@ -94,13 +130,27 @@ const ModalVideoZoom: React.FC = () => {
           </video>
         </VideoContainer>
         <DescriptionContainer>
-          <h3>{videoAtualizado.title}</h3>
-          <p>{videoAtualizado.description}</p>
-          <BotaoFavoritar
-            favorito={videoAtualizado.favorita ?? false}
-            onClick={() => toggleFavorite(videoAtualizado.id)}
-          />
-        </DescriptionContainer>
+  <h3>{videoAtualizado.title}</h3>
+  <p>{videoAtualizado.description}</p>
+
+  <div className="receita">
+    <strong>Receita:</strong><br />
+    {videoAtualizado.receita}
+  </div>
+
+  <ul className="nutrientes">
+    <li><strong>Proteínas:</strong> {videoAtualizado.proteinas}g</li>
+    <li><strong>Carboidratos:</strong> {videoAtualizado.carboidratos}g</li>
+    <li><strong>Gorduras:</strong> {videoAtualizado.gorduras}g</li>
+    <li><strong>Fibras:</strong> {videoAtualizado.fibras}g</li>
+    <li><strong>Calorias:</strong> {videoAtualizado.calorias ?? 0} kcal</li>
+  </ul>
+
+  <BotaoFavoritar
+    favorito={videoAtualizado.favorita ?? false}
+    onClick={() => toggleFavorite(videoAtualizado.id)}
+  />
+</DescriptionContainer>
       </ModalContent>
     </ModalBackground>
   );

@@ -15,7 +15,6 @@ const App: React.FC = () => {
         <VideoProvider>
           <ModalProvider>
             <EstilosGlobais />
-            <BarraNavegacao />
             <AppRoutes />
             <ModalVideoZoom />
           </ModalProvider>

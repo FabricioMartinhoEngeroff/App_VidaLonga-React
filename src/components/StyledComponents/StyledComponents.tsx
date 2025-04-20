@@ -12,9 +12,16 @@ export const FavoriteButton = styled.button<FavoriteButtonProps>`
   color: ${(props) => (props.$favorito ? "red" : "gray")};
   font-size: 24px;
   cursor: pointer;
+  margin-top: 8px;
 
   &:hover {
     color: ${(props) => (props.$favorito ? "#ff6666" : "lightgray")};
+  }
+
+  @media (max-width: 768px) {
+    font-size: 28px;
+    margin-top: 12px;
+    align-self: center;
   }
 `;
 
@@ -25,9 +32,15 @@ export const ArrowButton = styled.button`
   font-size: 24px;
   cursor: pointer;
   color: gray;
+  padding: 8px;
 
   &:hover {
     color: black;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 28px;
+    padding: 12px;
   }
 `;
 

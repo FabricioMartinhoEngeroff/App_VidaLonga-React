@@ -25,7 +25,7 @@ export const VideoProvider: React.FC<VideoProviderProps> = ({ children }) => {
     id: String(video.id),
     title: video.title,
     description: video.description,
-    url: video.path,
+    url: video.url,
     category: { id: "0", name: "Sem categoria" },
     comments: [],
     views: 0,
@@ -35,6 +35,7 @@ export const VideoProvider: React.FC<VideoProviderProps> = ({ children }) => {
     carboidratos: video.carboidratos ?? 0,
     gorduras: video.gorduras ?? 0,
     fibras: video.fibras ?? 0,
+    calorias: video.calorias ?? 0, 
     favorita: video.favorita ?? false,
   }));
 
