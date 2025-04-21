@@ -8,8 +8,10 @@ type CarrosselProps = {
 
 const CarrosselContainer = styled.div`
   position: relative;
-  padding: 16px;
-  overflow: hidden;
+  padding: 0 12px;
+  overflow-x: auto;
+  max-width: 100vw;
+  box-sizing: border-box;
 `;
 
 const ScrollButton = styled.button`
@@ -26,16 +28,21 @@ const ScrollButton = styled.button`
   &:hover {
     color: #000;
   }
-`;
 
-const VideoList = styled.div`
-  display: flex;
-  flex-wrap: nowrap;
-  gap: 16px;
-  overflow-x: auto;
-  scroll-behavior: smooth;
-  padding: 10px 0;
-`;
+  @media (max-width: 768px) {
+    display: none; /* oculta as setas em telas pequenas */
+  }
+    `;
+    
+    const VideoList = styled.div`
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 16px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding: 10px 0;
+    box-sizing: border-box;
+  `;
 
 const Carrossel: React.FC<CarrosselProps> = ({ children }) => {
   const carrosselRef = useRef<HTMLDivElement>(null);

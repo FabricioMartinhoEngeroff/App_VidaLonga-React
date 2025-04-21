@@ -2,42 +2,57 @@ import styled from "styled-components";
 import CampoTexto from "../CampoTexto/CampoTexto";
 import Titulo from "../Titulo/Titulo";
 
-// Estilização do header principal
+// Header com responsividade
 const HeaderEstilizado = styled.header`
   background-color: #7da873;
   padding: 10px 20px;
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
-  height: 80px;
+  height: auto;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
 `;
 
-// Container para o logo e o título
+// Container logo + título
 const LogoETituloContainer = styled.div`
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 8px;
+
+  @media (max-width: 768px) {
+    justify-content: center;
+  }
 `;
 
-// Estilização da logo
+// Logo responsiva
 const Logo = styled.img`
-  height: 85px;
+  height: 50px;
   width: auto;
-  margin: 10;
+  margin: 0;
   padding: 0;
   display: block;
-  outline: none;
-  box-shadow: #629359;
   background-color: #629359;
+  border-radius: 50%;
 `;
 
-// Container do campo de texto (pesquisa)
+// Campo de texto alinhado e adaptável
 const CampoTextoContainer = styled.div`
   flex: 1;
   display: flex;
   justify-content: flex-end;
   max-width: 400px;
+
+  @media (max-width: 768px) {
+    justify-content: center;
+    width: 100%;
+  }
 `;
 
 const Cabecalho: React.FC = () => {

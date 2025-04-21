@@ -9,11 +9,20 @@ import BotaoFavoritar from "../../components/BotaoFavoritar/BotaoFavoritar";
 
 const TituloContainer = styled.div`
   display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
   align-items: center;
   gap: 8px;
-  padding: 0 20px;
-  margin-bottom: 5px;
+  padding: 0 16px;
+  margin-bottom: 10px;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
 `;
+
 
 const VerTudo = styled.button`
   display: flex;
@@ -35,15 +44,20 @@ const VerTudo = styled.button`
 `;
 
 const VideoCard = styled.div`
-  width: 100%;
-  max-width: 300px;
-  background: rgba(98, 147, 89, 0.15); /* ajustável */
+  width: 90vw;
+  max-width: 320px;
+  min-width: 250px;
+  background: rgba(98, 147, 89, 0.15);
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   padding: 12px;
   margin: 0 8px;
   display: flex;
   flex-direction: column;
+
+  @media (max-width: 768px) {
+    padding: 10px;
+  }
 `;
 
 const VideoWrapper = styled.div`
@@ -82,9 +96,15 @@ const Comentarios = styled.div`
   font-size: 12px;
   color: #333;
 
+  .cabecalho-comentario {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4px;
+  }
+
   .titulo {
     font-weight: bold;
-    margin-bottom: 4px;
     color: #444;
   }
 
@@ -169,22 +189,15 @@ const Inicio: React.FC = () => {
         {videosReels.map((video) => (
           <VideoCard key={video.id}>
             <VideoWrapper>
-              <video
-                src={video.url}
-                muted
-                playsInline
-                onClick={() => abrirModal(video)}
-                onMouseEnter={(e) => (e.currentTarget as HTMLVideoElement).play()}
-                onMouseLeave={(e) => (e.currentTarget as HTMLVideoElement).pause()}
-              />
-            </VideoWrapper>
-
-            <LikeArea>
-              <BotaoFavoritar
-                favorito={video.favorita}
-                onClick={() => toggleFavorite(video.id)}
-              />
-            </LikeArea>
+  <video
+    src={video.url}
+    muted
+    playsInline
+    onClick={() => abrirModal(video)}
+    onMouseEnter={(e) => (e.currentTarget as HTMLVideoElement).play()}
+    onMouseLeave={(e) => (e.currentTarget as HTMLVideoElement).pause()}
+  />
+</VideoWrapper>
 
             <InfoArea>
               <h3>{video.title}</h3>
@@ -192,17 +205,25 @@ const Inicio: React.FC = () => {
             </InfoArea>
 
             <Comentarios>
-              {comentariosState[video.id]?.length > 2 && (
-                <span className="verTodos" onClick={() => abrirModal(video)}>
-                  Ver todos os {comentariosState[video.id].length} comentários
-                </span>
-              )}
+  <div className="cabecalho-comentario">
+    <div className="titulo">Comentários</div>
+    <BotaoFavoritar
+      favorito={video.favorita}
+      onClick={() => toggleFavorite(video.id)}
+    />
+  </div>
 
-              <div className="titulo">Comentários</div>
-              {comentariosState[video.id]?.slice(-2).map((comentario, index) => (
-                <span key={index}>{comentario}</span>
-              ))}
-            </Comentarios>
+  {comentariosState[video.id]?.length > 2 && (
+    <span className="verTodos" onClick={() => abrirModal(video)}>
+      Ver todos os {comentariosState[video.id].length} comentários
+    </span>
+  )}
+
+  {comentariosState[video.id]?.slice(-2).map((comentario, index) => (
+    <span key={index}>{comentario}</span>
+  ))}
+</Comentarios>
+
 
             <ComentarioForm>
               <input

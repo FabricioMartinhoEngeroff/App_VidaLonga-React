@@ -11,6 +11,8 @@ const EstilosGlobais = createGlobalStyle`
     height: 100%;
     font-size: 16px;
     scroll-behavior: smooth;
+    max-width: 100vw;
+    overflow-x: hidden;
   }
 
   body {
@@ -19,6 +21,8 @@ const EstilosGlobais = createGlobalStyle`
     line-height: 1.5;
     background-color: #f9f9f9;
     color: #333;
+    max-width: 100vw;
+    overflow-x: hidden;
   }
 
   h1, h2, h3, h4, h5, h6,
@@ -56,11 +60,8 @@ const EstilosGlobais = createGlobalStyle`
     html {
       font-size: 15px;
     }
-
-    body {
-      padding: 0 8px;
-    }
   }
 `;
+
 
 export default EstilosGlobais;

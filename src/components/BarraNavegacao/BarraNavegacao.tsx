@@ -7,12 +7,26 @@ const BarraNavegacaoContainer = styled.nav`
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-wrap: wrap;
   padding: 10px 10px;
   background-color: #7da873;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
-  gap: 45px;
+  gap: 32px;
   width: 100%;
   margin: 0 auto;
+
+  @media (max-width: 768px) {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    gap: 10px;
+    padding: 8px;
+    justify-content: space-around;
+    background-color: #7da873;
+    box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.25);
+  }
 `;
 
 type Item = {
