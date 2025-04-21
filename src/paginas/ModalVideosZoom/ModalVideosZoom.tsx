@@ -1,104 +1,51 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import { MdClose, MdFavorite, MdFavoriteBorder } from "react-icons/md";
+import { MdClose } from "react-icons/md";
 import { useModalContext } from "../../Context/ModalContext";
 import { useVideoContext } from "../../Context/VideoContext";
 import BotaoFavoritar from "../../components/BotaoFavoritar/BotaoFavoritar";
 
-
 const ModalBackground = styled.div`
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.8);
+  inset: 0;
+  background: #000;
+  z-index: 1000;
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
 `;
 
 const ModalContent = styled.div`
   position: relative;
   background: #080808;
-  padding: 20px;
-  border-radius: 8px;
-  display: flex;
-  flex-direction: row;
-  gap: 20px;
-
-  @media (max-width: 768px) {
-    flex-direction: column;
-  }
-`;
-
-const VideoContainer = styled.div`
-  flex: 3;
-
-  video {
-    width: 100%;
-    border-radius: 8px;
-    aspect-ratio: 16/9;
-  }
-`;
-
-const DescriptionContainer = styled.div`
-  flex: 1;
-  color: white;
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
 
-  h3 {
-    margin-bottom: 10px;
-    font-size: 24px;
-  }
-
-  p {
-    margin-bottom: 10px;
-    font-size: 16px;
-    line-height: 1.5;
-  }
-
-  .receita {
-    margin: 12px 0;
-    background-color: #1c1c1c;
-    padding: 12px;
-    border-radius: 6px;
-    font-size: 15px;
-    line-height: 1.4;
-    color: #ddd;
-  }
-
-  .nutrientes {
-    margin-top: 12px;
-    font-size: 14px;
-    color: #ccc;
-
-    li {
-      margin-bottom: 4px;
-    }
-  }
-
-  @media (max-width: 768px) {
-    h3 {
-      font-size: 20px;
-    }
-
-    p, .receita, .nutrientes {
-      font-size: 15px;
-    }
+  @media (min-width: 769px) {
+    width: 90%;
+    height: 90%;
+    max-width: 960px;
+    border-radius: 12px;
+    flex-direction: row;
+    overflow: hidden;
   }
 `;
 
 const CloseButton = styled.button`
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 12px;
+  right: 12px;
+  z-index: 9999;
   background: none;
   border: none;
-  font-size: 32px;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: white;
+  font-size: 32px;
   cursor: pointer;
 
   &:hover {
@@ -106,9 +53,130 @@ const CloseButton = styled.button`
   }
 `;
 
+const VideoPlayer = styled.div`
+  width: 100%;
+  background: black;
+
+  video {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+  }
+
+  @media (min-width: 769px) {
+    flex: 2;
+
+    video {
+      height: 100%;
+      width: 100%;
+      aspect-ratio: auto;
+    }
+  }
+`;
+
+const Conteudo = styled.div`
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  color: white;
+  background-color: #080808;
+
+  @media (min-width: 769px) {
+    max-height: 100%;
+  }
+`;
+
+const Titulo = styled.h3`
+  font-size: 20px;
+  margin-bottom: 8px;
+`;
+
+const Descricao = styled.p`
+  font-size: 15px;
+  margin-bottom: 12px;
+`;
+
+const ReceitaBox = styled.div`
+  background: #1c1c1c;
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 16px;
+  font-size: 15px;
+  color: #ddd;
+`;
+
+const Nutrientes = styled.ul`
+  list-style: none;
+  padding: 0;
+  margin: 0 0 16px 0;
+  font-size: 14px;
+  color: #ccc;
+
+  li {
+    margin-bottom: 6px;
+    display: flex;
+    justify-content: space-between;
+  }
+`;
+
+const Comentarios = styled.div`
+  margin-top: 16px;
+`;
+
+const ComentarioTituloLinha = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+
+  .titulo {
+    font-weight: bold;
+    font-size: 15px;
+  }
+`;
+
+const ComentarioItem = styled.div`
+  margin-bottom: 6px;
+  font-size: 13px;
+  color: #bbb;
+`;
+
+const ComentarioForm = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  input {
+    flex: 1;
+    padding: 6px 8px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 13px;
+  }
+
+  button {
+    align-self: flex-end;
+    padding: 6px 10px;
+    background-color: #6a0dad;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 13px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #8b5cd6;
+    }
+  }
+`;
+
 const ModalVideoZoom: React.FC = () => {
   const { videoSelecionado, fecharModal } = useModalContext();
   const { videosReels, toggleFavorite } = useVideoContext();
+
+  const [novoComentario, setNovoComentario] = useState("");
+  const [comentarios, setComentarios] = useState<string[]>([]);
 
   if (!videoSelecionado) return null;
 
@@ -118,39 +186,65 @@ const ModalVideoZoom: React.FC = () => {
 
   if (!videoAtualizado) return null;
 
+  const adicionarComentario = () => {
+    const comentarioLimpo = novoComentario.trim();
+    if (!comentarioLimpo) return;
+    setComentarios((prev) => [...prev, `Você: ${comentarioLimpo}`]);
+    setNovoComentario("");
+  };
+
   return (
     <ModalBackground onClick={fecharModal}>
       <ModalContent onClick={(e) => e.stopPropagation()}>
-        <CloseButton onClick={fecharModal}>
-          <MdClose />
-        </CloseButton>
-        <VideoContainer>
-          <video controls>
+        <CloseButton onClick={fecharModal}><MdClose /></CloseButton>
+
+        <VideoPlayer>
+          <video controls autoPlay>
             <source src={videoAtualizado.url} type="video/mp4" />
           </video>
-        </VideoContainer>
-        <DescriptionContainer>
-  <h3>{videoAtualizado.title}</h3>
-  <p>{videoAtualizado.description}</p>
+        </VideoPlayer>
 
-  <div className="receita">
-    <strong>Receita:</strong><br />
-    {videoAtualizado.receita}
-  </div>
+        <Conteudo>
+          <Titulo>{videoAtualizado.title}</Titulo>
+          <Descricao>{videoAtualizado.description}</Descricao>
 
-  <ul className="nutrientes">
-    <li><strong>Proteínas:</strong> {videoAtualizado.proteinas}g</li>
-    <li><strong>Carboidratos:</strong> {videoAtualizado.carboidratos}g</li>
-    <li><strong>Gorduras:</strong> {videoAtualizado.gorduras}g</li>
-    <li><strong>Fibras:</strong> {videoAtualizado.fibras}g</li>
-    <li><strong>Calorias:</strong> {videoAtualizado.calorias ?? 0} kcal</li>
-  </ul>
+          <ReceitaBox>
+            <strong>Receita:</strong><br />
+            {videoAtualizado.receita}
+          </ReceitaBox>
 
-  <BotaoFavoritar
-    favorito={videoAtualizado.favorita ?? false}
-    onClick={() => toggleFavorite(videoAtualizado.id)}
-  />
-</DescriptionContainer>
+          <Nutrientes>
+            <li><span><strong>Proteínas:</strong></span> {videoAtualizado.proteinas}g</li>
+            <li><span><strong>Carboidratos:</strong></span> {videoAtualizado.carboidratos}g</li>
+            <li><span><strong>Gorduras:</strong></span> {videoAtualizado.gorduras}g</li>
+            <li><span><strong>Fibras:</strong></span> {videoAtualizado.fibras}g</li>
+            <li><span><strong>Calorias:</strong> {videoAtualizado.calorias ?? 0} kcal</span></li>
+          </Nutrientes>
+
+          <Comentarios>
+            <ComentarioTituloLinha>
+              <div className="titulo">Comentários</div>
+              <BotaoFavoritar
+                favorito={videoAtualizado.favorita ?? false}
+                onClick={() => toggleFavorite(videoAtualizado.id)}
+              />
+            </ComentarioTituloLinha>
+
+            {comentarios.map((c, i) => (
+              <ComentarioItem key={i}>{c}</ComentarioItem>
+            ))}
+
+            <ComentarioForm>
+              <input
+                type="text"
+                placeholder="Faça um comentário..."
+                value={novoComentario}
+                onChange={(e) => setNovoComentario(e.target.value)}
+              />
+              <button onClick={adicionarComentario}>Publicar</button>
+            </ComentarioForm>
+          </Comentarios>
+        </Conteudo>
       </ModalContent>
     </ModalBackground>
   );

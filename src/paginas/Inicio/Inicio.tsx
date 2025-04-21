@@ -127,11 +127,13 @@ const Comentarios = styled.div`
 
 const ComentarioForm = styled.div`
   display: flex;
+  flex-wrap: wrap; /* 🔥 Permite quebrar no mobile */
   gap: 6px;
   margin-top: 6px;
 
   input {
     flex: 1;
+    min-width: 0;
     padding: 6px 8px;
     border-radius: 6px;
     border: 1px solid #ccc;
@@ -146,12 +148,23 @@ const ComentarioForm = styled.div`
     border-radius: 6px;
     font-size: 12px;
     cursor: pointer;
+    white-space: nowrap;
 
     &:hover {
       background-color: #8b5cd6;
     }
   }
+
+  @media (max-width: 500px) {
+    flex-direction: column; /* Opcional: empilha no celular */
+    align-items: stretch;
+
+    button {
+      width: 100%;
+    }
+  }
 `;
+
 
 // Componente Inicio refatorado
 const Inicio: React.FC = () => {
